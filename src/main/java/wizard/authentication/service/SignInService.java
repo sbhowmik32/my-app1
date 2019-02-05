@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import wizard.authentication.db.User;
+import wizard.authentication.exception.OperationNotAllowedException;
 import wizard.authentication.exception.UnauthorizedException;
 import wizard.authentication.repo.UserRepository;
 
@@ -23,6 +24,9 @@ public class SignInService {
             throw new UnauthorizedException("Email or password is not correct!");
         }
         validatePassword(plainPassword, user.password);
+        if(user.isEmailVerified.equals(Boolean.FALSE)){
+            throw new OperationNotAllowedException("Email is not verified. Please verify the email address sent to your email address");
+        }
     }
 
     private void validatePassword(String plainPassword, String hashedPassword) {
