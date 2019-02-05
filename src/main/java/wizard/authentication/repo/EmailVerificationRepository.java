@@ -5,4 +5,5 @@ import wizard.authentication.db.EmailVerification;
 
 public interface EmailVerificationRepository extends JpaRepository<EmailVerification, Long> {
 
+    EmailVerification findByAccountIdAndVerificationCode(long accountId, String verificationCode);
 }

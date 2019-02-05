@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import wizard.authentication.db.EmailVerification;
 import wizard.authentication.db.User;
+import wizard.authentication.exception.OperationNotAllowedException;
+import wizard.authentication.exception.UnauthorizedException;
 import wizard.authentication.exception.UserExistException;
 import wizard.authentication.repo.EmailVerificationRepository;
 import wizard.authentication.repo.UserRepository;
@@ -49,6 +51,23 @@ public class SignUpService {
         user.password = saltedPassword;
         userRepository.save(user);
         sendEmailVerificationLink(user);
+    }
+
+    @Transactional
+    public void verifyEmail(long accountId, String verificationCode) {
+        EmailVerification emailVerification = emailVerificationRepository.findByAccountIdAndVerificationCode(accountId, verificationCode);
+        if (emailVerification == null) {
+            throw new UnauthorizedException("Email does not exist");
+        }
+        if (emailVerification.isActive.equals(Boolean.FALSE)) {
+            throw new OperationNotAllowedException("Email ie already verified");
+        }
+        emailVerification.isActive = Boolean.FALSE;
+        emailVerificationRepository.save(emailVerification);
+
+        User user = userRepository.findOne(accountId);
+        user.isEmailVerified = Boolean.TRUE;
+        userRepository.save(user);
     }
 
     private void sendEmailVerificationLink(User user) {

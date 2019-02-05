@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.context.request.async.DeferredResult;
 import wizard.authentication.request.CommonMessageResponseREST;
 import wizard.authentication.request.SignUpRequestREST;
+import wizard.authentication.request.VerifyEmailRequestREST;
 import wizard.authentication.service.SignUpService;
 
 import javax.inject.Inject;
@@ -33,4 +34,13 @@ public class SignUpControllerAsync {
         result.setResult(new ResponseEntity<>(HttpStatus.OK));
     }
 
+    @Async
+    public void verifyEmail(
+            DeferredResult<ResponseEntity<CommonMessageResponseREST>> result,
+            VerifyEmailRequestREST requestREST
+    ) {
+        log.info("Processing VERIFY EMAIL request for account id: {}", requestREST.accountId);
+        signUpService.verifyEmail(requestREST.accountId, requestREST.verificationCode);
+        result.setResult(new ResponseEntity<>(HttpStatus.OK));
+    }
 }
