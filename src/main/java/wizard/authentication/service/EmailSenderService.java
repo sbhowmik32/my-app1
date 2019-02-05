@@ -40,14 +40,14 @@ public class EmailSenderService {
 
 //    @Async
 //    public CompletableFuture sendEmail(String recipientEmailAddress, String emailSubject, String emailText,) {
-//        log.debug("Send email to " + recipientEmailAddress);
+//        log.debug("Send emailAddress to " + recipientEmailAddress);
 //        return sendEmail(recipientEmailAddress, emailSubject, emailText);
 //    }
 
     @Async
     public CompletableFuture<String> sendEmail(String recipientEmailAddress, String emailSubject, String emailText) {
 
-        log.debug("Sending email to " + recipientEmailAddress + " : " + emailSubject);
+        log.debug("Sending emailAddress to " + recipientEmailAddress + " : " + emailSubject);
 
         MimeMessage mail = javaMailSender.createMimeMessage();
 

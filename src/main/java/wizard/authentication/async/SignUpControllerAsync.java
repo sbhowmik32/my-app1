@@ -13,6 +13,7 @@ import wizard.authentication.request.CommonMessageResponseREST;
 import wizard.authentication.request.SignUpRequestREST;
 import wizard.authentication.request.VerifyEmailRequestREST;
 import wizard.authentication.service.SignUpService;
+import wizard.authentication.utils.AuthenticationWizardSays;
 
 import javax.inject.Inject;
 
@@ -29,9 +30,9 @@ public class SignUpControllerAsync {
             DeferredResult<ResponseEntity<CommonMessageResponseREST>> result,
             SignUpRequestREST requestREST
     ) {
-        log.info("Processing create account request with using email: {}", requestREST.emailAddress);
+        log.info("Processing create account request with using emailAddress: {}", requestREST.emailAddress);
         signUpService.createAccount(requestREST);
-        result.setResult(new ResponseEntity<>(HttpStatus.OK));
+        AuthenticationWizardSays.ok(result);
     }
 
     @Async
@@ -41,6 +42,6 @@ public class SignUpControllerAsync {
     ) {
         log.info("Processing VERIFY EMAIL request for account id: {}", requestREST.accountId);
         signUpService.verifyEmail(requestREST.accountId, requestREST.verificationCode);
-        result.setResult(new ResponseEntity<>(HttpStatus.OK));
+        AuthenticationWizardSays.ok(result, "Email verified successfully!");
     }
 }

@@ -42,11 +42,11 @@ public class SignUpREST {
         return result;
     }
 
-    @ApiOperation(value = "Verify user email")
+    @ApiOperation(value = "Verify user emailAddress")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = CommonMessageResponseREST.class)
     })
-    @RequestMapping(value = "/email/verification", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/emailAddress/verification", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public DeferredResult<ResponseEntity<CommonMessageResponseREST>> verifyEmailAddress(
             @RequestBody VerifyEmailRequestREST requestREST
     ) {

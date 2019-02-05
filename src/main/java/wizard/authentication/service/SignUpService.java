@@ -26,7 +26,7 @@ public class SignUpService {
 
     private static final String EMAIL_VERIFICATION_SUBJECT = "Email verification";
 
-    @Value("${email.verificationlink}")
+    @Value("${emailAddress.verificationlink}")
     private String emailVerificationLinkBase;
 
     @Inject
@@ -71,7 +71,7 @@ public class SignUpService {
     }
 
     private void sendEmailVerificationLink(User user) {
-        log.info("Generating and sending email verification link");
+        log.info("Generating and sending emailAddress verification link");
         String verificationCode = UUID.randomUUID().toString();
         String emailVerificationLink = emailVerificationLinkBase + "/" + user.accountId + "/" + verificationCode;
         log.info("Email verification link: {}", emailVerificationLink);
