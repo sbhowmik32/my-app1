@@ -38,16 +38,14 @@ public class EmailSenderService {
     }
 
 
-    @Async
-    public CompletableFuture sendEmail(String recipientEmailAddress, String emailSubject, String emailTemplate,
-                                       Map<String, Object> model) {
-        log.debug("Send email to " + recipientEmailAddress);
-        return sendEmail(recipientEmailAddress, emailSubject, emailTemplate, model, null);
-    }
+//    @Async
+//    public CompletableFuture sendEmail(String recipientEmailAddress, String emailSubject, String emailText,) {
+//        log.debug("Send email to " + recipientEmailAddress);
+//        return sendEmail(recipientEmailAddress, emailSubject, emailText);
+//    }
 
     @Async
-    public CompletableFuture<String> sendEmail(String recipientEmailAddress, String emailSubject, String emailTemplate,
-                                               Map<String, Object> model, File attachmentFile) {
+    public CompletableFuture<String> sendEmail(String recipientEmailAddress, String emailSubject, String emailText) {
 
         log.debug("Sending email to " + recipientEmailAddress + " : " + emailSubject);
 

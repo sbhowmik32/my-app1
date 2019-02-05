@@ -4,28 +4,24 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "email_verification")
+public class EmailVerification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public Long id;
+
+    @NotNull
     @Column(name = "account_id")
     public Long accountId;
 
     @NotNull
-    @Column(name = "email")
-    public String email;
+    @Column(name = "verification_code")
+    public String verificationCode;
 
     @NotNull
-    @Column(name = "name")
-    public String name;
-
-    @NotNull
-    @Column(name = "password")
-    public String password;
-
-    @NotNull
-    @Column(name = "is_email_verified")
-    public Boolean isEmailVerified = Boolean.FALSE;
+    @Column(name = "is_active")
+    public Boolean isActive = Boolean.TRUE;
 
     @NotNull
     @Column(name = "created_at")

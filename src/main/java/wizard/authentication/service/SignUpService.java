@@ -3,15 +3,18 @@ package wizard.authentication.service;
 import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import wizard.authentication.db.EmailVerification;
 import wizard.authentication.db.User;
 import wizard.authentication.exception.UserExistException;
+import wizard.authentication.repo.EmailVerificationRepository;
 import wizard.authentication.repo.UserRepository;
 import wizard.authentication.request.SignUpRequestREST;
 
 import javax.inject.Inject;
+import java.util.UUID;
 
 @Service
 public class SignUpService {
@@ -19,14 +22,19 @@ public class SignUpService {
 
     private static final Integer SLOW_LOG_ROUNDS = 10;
 
+    private static final String EMAIL_VERIFICATION_SUBJECT = "Email verification";
+
+    @Value("${email.verificationlink}")
+    private String emailVerificationLinkBase;
+
     @Inject
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
+    @Inject
+    EmailSenderService emailSenderService;
 
-//    @Autowired
-//    public SignUpService(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
+    @Inject
+    EmailVerificationRepository emailVerificationRepository;
 
     @Transactional
     public void createAccount(SignUpRequestREST requestREST) {
@@ -39,14 +47,27 @@ public class SignUpService {
         user.email = requestREST.emailAddress;
         user.name = requestREST.name;
         user.password = saltedPassword;
-
         userRepository.save(user);
+        sendEmailVerificationLink(user);
+    }
+
+    private void sendEmailVerificationLink(User user) {
+        log.info("Generating and sending email verification link");
+        String verificationCode = UUID.randomUUID().toString();
+        String emailVerificationLink = emailVerificationLinkBase + "/" + user.accountId + "/" + verificationCode;
+        log.info("Email verification link: {}", emailVerificationLink);
+        EmailVerification emailVerification = new EmailVerification();
+        emailVerification.accountId = user.accountId;
+        emailVerification.verificationCode = verificationCode;
+        emailVerificationRepository.save(emailVerification);
+        emailSenderService.sendEmail(user.email, EMAIL_VERIFICATION_SUBJECT, emailVerificationLink);
     }
 
     private void validateUserDoesNotExist(String emailAddress) {
-//        User user = userRepository.findByEmailAddress(emailAddress);
-//        if (user != null) {
-//            throw new UserExistException();
-//        }
+        User user = userRepository.findByEmail(emailAddress);
+        if (user != null) {
+            log.info("User already exist!");
+            throw new UserExistException();
+        }
     }
 }

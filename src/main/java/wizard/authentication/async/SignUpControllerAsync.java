@@ -23,11 +23,6 @@ public class SignUpControllerAsync {
     @Inject
     private SignUpService signUpService;
 
-//    @Autowired
-//    public SignUpControllerAsync(SignUpService signUpService) {
-//        this.signUpService = signUpService;
-//    }
-
     @Async
     public void createNewAccount(
             DeferredResult<ResponseEntity<CommonMessageResponseREST>> result,
