@@ -17,6 +17,7 @@ import wizard.authentication.request.CommonMessageResponseREST;
 import wizard.authentication.request.SignInRequestREST;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/signin")
@@ -24,7 +25,7 @@ public class SigninREST {
     private static Logger log = LoggerFactory.getLogger(SignUpREST.class);
 
     @Inject
-    SignInControllerAsync signInControllerAsync;
+    private SignInControllerAsync signInControllerAsync;
 
     @ApiOperation(value = "Create a new account")
     @ApiResponses(value = {
@@ -32,7 +33,7 @@ public class SigninREST {
     })
     @RequestMapping(value = "", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public DeferredResult<ResponseEntity<CommonMessageResponseREST>> signin(
-            @RequestBody SignInRequestREST requestREST
+            @Valid @RequestBody SignInRequestREST requestREST
     ) {
         DeferredResult<ResponseEntity<CommonMessageResponseREST>> result = new DeferredResult<>();
         signInControllerAsync.signIn(result, requestREST);

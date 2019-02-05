@@ -19,6 +19,7 @@ import wizard.authentication.request.SignUpRequestREST;
 import wizard.authentication.request.VerifyEmailRequestREST;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("")
@@ -35,7 +36,7 @@ public class SignUpREST {
     })
     @RequestMapping(value = "/signup", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public DeferredResult<ResponseEntity<CommonMessageResponseREST>> createNewAccount(
-            @RequestBody SignUpRequestREST requestREST
+            @Valid @RequestBody SignUpRequestREST requestREST
     ) {
         DeferredResult<ResponseEntity<CommonMessageResponseREST>> result = new DeferredResult<>();
         signUpControllerAsync.createNewAccount(result, requestREST);
@@ -46,9 +47,9 @@ public class SignUpREST {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success", response = CommonMessageResponseREST.class)
     })
-    @RequestMapping(value = "/emailAddress/verification", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/email/verification", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public DeferredResult<ResponseEntity<CommonMessageResponseREST>> verifyEmailAddress(
-            @RequestBody VerifyEmailRequestREST requestREST
+            @Valid @RequestBody VerifyEmailRequestREST requestREST
     ) {
         DeferredResult<ResponseEntity<CommonMessageResponseREST>> result = new DeferredResult<>();
         signUpControllerAsync.verifyEmail(result, requestREST);

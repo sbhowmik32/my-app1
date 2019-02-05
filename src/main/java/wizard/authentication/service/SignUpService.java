@@ -13,7 +13,6 @@ import wizard.authentication.exception.UnauthorizedException;
 import wizard.authentication.exception.UserExistException;
 import wizard.authentication.repo.EmailVerificationRepository;
 import wizard.authentication.repo.UserRepository;
-import wizard.authentication.request.SignUpRequestREST;
 
 import javax.inject.Inject;
 import java.util.UUID;
@@ -39,15 +38,15 @@ public class SignUpService {
     EmailVerificationRepository emailVerificationRepository;
 
     @Transactional
-    public void createAccount(SignUpRequestREST requestREST) {
-        validateUserDoesNotExist(requestREST.emailAddress);
+    public void createAccount(String emailAddress, String name, String password) {
+        validateUserDoesNotExist(emailAddress);
 
         String salt = BCrypt.gensalt(SLOW_LOG_ROUNDS);
-        String saltedPassword = BCrypt.hashpw(requestREST.password, salt);
+        String saltedPassword = BCrypt.hashpw(password, salt);
 
         User user = new User();
-        user.email = requestREST.emailAddress;
-        user.name = requestREST.name;
+        user.email = emailAddress;
+        user.name = name;
         user.password = saltedPassword;
         userRepository.save(user);
         sendEmailVerificationLink(user);
@@ -63,10 +62,12 @@ public class SignUpService {
             throw new OperationNotAllowedException("Email ie already verified");
         }
         emailVerification.isActive = Boolean.FALSE;
+        emailVerification.updatedAt = System.currentTimeMillis();
         emailVerificationRepository.save(emailVerification);
 
         User user = userRepository.findOne(accountId);
         user.isEmailVerified = Boolean.TRUE;
+        user.updatedAt = System.currentTimeMillis();
         userRepository.save(user);
     }
 

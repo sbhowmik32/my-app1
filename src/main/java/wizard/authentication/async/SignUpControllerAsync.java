@@ -31,7 +31,7 @@ public class SignUpControllerAsync {
             SignUpRequestREST requestREST
     ) {
         log.info("Processing create account request with using emailAddress: {}", requestREST.emailAddress);
-        signUpService.createAccount(requestREST);
+        signUpService.createAccount(requestREST.emailAddress, requestREST.name, requestREST.password);
         AuthenticationWizardSays.ok(result);
     }
 
