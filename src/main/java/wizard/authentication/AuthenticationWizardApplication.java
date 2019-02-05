@@ -1,3 +1,5 @@
+package wizard.authentication;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -11,10 +13,11 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableAsync
 @ComponentScan(basePackages = "wizard.authentication")
 @EntityScan(basePackages = "wizard.authentication.db")
-public class AuthenticationWizardMain {
-    private static final Logger log = LoggerFactory.getLogger(AuthenticationWizardMain.class);
-    public static void main(String[] args){
-        SpringApplication app = new SpringApplication(AuthenticationWizardMain.class);
+public class AuthenticationWizardApplication {
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationWizardApplication.class);
+
+    public static void main(String[] args) {
+        SpringApplication app = new SpringApplication(AuthenticationWizardApplication.class);
         ApplicationContext context = app.run(args);
         log.info("==============================================================");
         log.info("Authentication wizard started!");
