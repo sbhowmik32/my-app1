@@ -1,4 +1,4 @@
-package wizard.authentication.configuration;
+package wizard.authentication.service.config;
 
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.boot.bind.RelaxedPropertyResolver;

@@ -1,4 +1,4 @@
-package wizard.authentication.db;
+package wizard.authentication.db.pojo;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

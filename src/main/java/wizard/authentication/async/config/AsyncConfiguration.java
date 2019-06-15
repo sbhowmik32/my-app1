@@ -1,4 +1,4 @@
-package wizard.authentication.configuration;
+package wizard.authentication.async.config;
 
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Configuration;

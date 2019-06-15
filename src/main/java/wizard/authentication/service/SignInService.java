@@ -4,10 +4,10 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import wizard.authentication.db.User;
+import wizard.authentication.db.pojo.User;
 import wizard.authentication.exception.OperationNotAllowedException;
 import wizard.authentication.exception.UnauthorizedException;
-import wizard.authentication.repo.UserRepository;
+import wizard.authentication.db.repo.UserRepository;
 
 import javax.inject.Inject;
 

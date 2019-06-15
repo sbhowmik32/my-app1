@@ -6,13 +6,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import wizard.authentication.db.EmailVerification;
-import wizard.authentication.db.User;
+import wizard.authentication.db.pojo.EmailVerification;
+import wizard.authentication.db.pojo.User;
 import wizard.authentication.exception.OperationNotAllowedException;
 import wizard.authentication.exception.UnauthorizedException;
 import wizard.authentication.exception.UserExistException;
-import wizard.authentication.repo.EmailVerificationRepository;
-import wizard.authentication.repo.UserRepository;
+import wizard.authentication.db.repo.EmailVerificationRepository;
+import wizard.authentication.db.repo.UserRepository;
 
 import javax.inject.Inject;
 import java.util.UUID;

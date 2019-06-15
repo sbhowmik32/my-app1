@@ -1,4 +1,4 @@
-package wizard.authentication.configuration;
+package wizard.authentication.db.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 import java.util.Arrays;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "wizard.authentication.repo")
+@EnableJpaRepositories(basePackages = "wizard.authentication.db.repo")
 @EnableTransactionManagement
 public class DatabaseConfiguration implements EnvironmentAware {
 
