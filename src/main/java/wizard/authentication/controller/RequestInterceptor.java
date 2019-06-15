@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Controller
-public class Interceptor extends HandlerInterceptorAdapter {
-    private static final Logger log = LoggerFactory.getLogger(Interceptor.class);
+public class RequestInterceptor extends HandlerInterceptorAdapter {
+    private static final Logger log = LoggerFactory.getLogger(RequestInterceptor.class);
 
     @Autowired
-    public Interceptor() {
+    public RequestInterceptor() {
     }
 
     @Override
